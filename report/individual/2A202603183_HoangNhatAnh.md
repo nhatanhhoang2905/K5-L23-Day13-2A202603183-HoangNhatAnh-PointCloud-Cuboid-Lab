@@ -5,7 +5,7 @@ MSSV: **2A202603183**. Task cá nhân: **D13-2A202603183**. Hệ điều hành: 
 
 Mười frame được giao: `s01f08`, `s01f31`, `s02f17`, `s02f32`, `s03f18`, `s03f46`, `s04f15`, `s04f46`, `s05f07`, `s05f41`.
 
-Bảng A hiện có **65 cuboid**, trong đó **61 cuboid có tâm trong 50 m** và 4 cuboid ngoài phạm vi chấm. Ba frame ít hộp nhất là `s01f31`, `s04f15`, `s04f46`, mỗi frame 5 hộp; chưa có ghi chép riêng giải thích số lượng ở các frame này. Phiếu tự kiểm còn **1/65 cuboid có cảnh báo**. Ba vật mẫu đã được kiểm hướng, đáy và các view; phần còn cần xem lại là kích thước Bus, loại xe của Cyclist và các vật rất xa. Chưa có thông tin MSSV bạn ngồi cạnh hoặc kết quả đổi kiểm.
+Bảng A hiện có **65 cuboid**, trong đó **61 cuboid có tâm trong 50 m** và 4 cuboid ngoài phạm vi chấm. Ba frame ít hộp nhất là `s01f31`, `s04f15`, `s04f46`, mỗi frame 5 hộp; chưa có ghi chép riêng giải thích số lượng ở các frame này. Phiếu tự kiểm còn **1/65 cuboid có cảnh báo**. Ba vật mẫu đã được kiểm hướng, đáy và các view; phần còn cần xem lại là kích thước Bus, loại xe của Cyclist và các vật rất xa. Đã dùng công cụ đối chiếu hai số trong bài của MSSV **2A202603192**, cả hai đều khớp với Bảng A bạn ấy gửi. Chưa có phản hồi bạn ấy kiểm bài của tôi và chưa xác nhận đổi kiểm trực tiếp trên màn hình.
 
 Cách dùng CVAT:
 
@@ -111,7 +111,18 @@ Tôi đã sửa bốn cuboid sau khi xem các cảnh báo tự kiểm dưới đ
 
 Trong phiếu tự kiểm hiện tại, bốn cặp frame/idx ở bảng sửa trên đều không còn cờ. Cảnh báo còn lại là Car `s05f41 #6`: rộng 2,418 m và cao 2,310 m vượt khoảng kiểm của công cụ. Hộp có 628 điểm bên trong, khoảng hở đáy với mặt đường ước lượng là 0,07 m. Chưa có lý do quan sát được xác nhận để giữ nguyên kích thước này; cần xem lại, không coi hết các cờ khác là bằng chứng mọi hộp đã đúng.
 
-Đổi kiểm: chưa có MSSV người kiểm chéo, hai số được đối chiếu hoặc kết quả được xác nhận; chưa ghi nhận phần này là đã hoàn thành.
+### Đối chiếu với bài của bạn
+
+Ngày **26/11/2026**, tôi nhờ công cụ đối chiếu hai số trong mục 5 báo cáo của MSSV **2A202603192** với Bảng A trong bộ ZIP bạn ấy gửi. Kết quả dưới đây thuộc bài của bạn ấy, không phải số đo của task cá nhân của tôi.
+
+| Nội dung kiểm | Frame, idx, class trong bài bạn | Cột | Báo cáo bạn (m) | Bảng A bạn (m) | Kết quả |
+|---|---|---|---|---|---|
+| Khoảng cách gần nhất | s04f00, #1, Car | dist_m | 4,45 | 4,45 | Khớp; nhỏ nhất trong 99 dòng. |
+| Khoảng cách xa nhất toàn bảng | s03f24, #6, Car | dist_m | 75,37 | 75,37 | Khớp; lớn nhất trong 99 dòng, ngoài 50 m. |
+
+Không phát hiện chênh lệch cần sửa ở hai số này. Việc đối chiếu chỉ kiểm sự khớp nhau giữa báo cáo và CSV, không xác nhận hình học cuboid hay chất lượng nhãn. Đây chưa phải đổi kiểm trực tiếp trên màn hình theo GUIDE.md.
+
+Chiều bạn ấy kiểm bài của tôi **chưa có kết quả**. Hai số tôi đề xuất để bạn ấy kiểm là `dist_m` của Car `s01f08 #2` (**3,79 m**) và Car `s01f08 #7` (**75,47 m**). Chưa ghi nhận yêu cầu đổi kiểm là đã hoàn thành.
 
 ## 6. Ý nghĩa của nhãn, cách dùng AI và điều còn chưa chắc
 Nhãn 3D dùng mét để model học vị trí, khoảng cách và kích thước vật trong không gian thực; kích thước theo pixel thay đổi theo góc nhìn và khoảng cách nên không biểu diễn trực tiếp các đại lượng này. Với vật thưa điểm, cần quy tắc về mức bằng chứng và phần được phép suy luận để hạn chế tạo nhãn thiếu căn cứ, khiến model học sai vị trí hoặc kích thước.
@@ -119,7 +130,7 @@ Nhãn 3D dùng mét để model học vị trí, khoảng cách và kích thư�
 Cách dùng AI:
 
 - Công cụ: ChatGPT/Codex, có sử dụng công cụ tạo/chỉnh ảnh AI.
-- Câu hỏi chính: hướng dẫn lệnh và thao tác CVAT, quy tắc Shape/class, yêu cầu ảnh và bài nộp; thêm trục hướng, khoanh cụm điểm trên ảnh; trích số từ hai CSV và hoàn thiện báo cáo.
-- Cách dùng kết quả: nhờ AI biên tập ghi chép, giải thích khái niệm, ghép frame/idx, tính khoảng cách/tỉ lệ và bổ sung các giả thuyết được ghi rõ là chưa xác minh; đóng gói và kiểm bộ nộp. Hai bản ảnh top đánh dấu bằng AI cần thay bằng ảnh gốc đánh dấu trực tiếp để giữ nguyên bằng chứng; việc thay ảnh chưa được xác nhận.
+- Câu hỏi chính: hướng dẫn lệnh và thao tác CVAT, quy tắc Shape/class, yêu cầu ảnh và bài nộp; thêm trục hướng, khoanh cụm điểm trên ảnh; trích số từ hai CSV, đối chiếu hai số trong bài MSSV 2A202603192 và hoàn thiện báo cáo.
+- Cách dùng kết quả: nhờ AI biên tập ghi chép, giải thích khái niệm, ghép frame/idx, tính khoảng cách/tỉ lệ và bổ sung các giả thuyết được ghi rõ là chưa xác minh; đóng gói và kiểm bộ nộp. Kết quả đối chiếu bài bạn được ghi riêng ở mục 5, không coi là xác nhận bạn ấy đã kiểm bài tôi. Hai bản ảnh top đánh dấu bằng AI cần thay bằng ảnh gốc đánh dấu trực tiếp để giữ nguyên bằng chứng; việc thay ảnh chưa được xác nhận.
 
-Điều còn chưa chắc: loại xe cụ thể và kích thước của mẫu Cyclist; chiều rộng Bus; cảnh báo kích thước Car còn lại; bản chất cụm điểm rời trong ảnh điểm lạ. Độ cao mặt đường chưa được đo trực tiếp, các ví dụ hướng lấy từ Bảng A còn cần đối chiếu camera, và bốn hộp ngoài 50 m không thuộc phạm vi chấm. Chưa có kết quả đổi kiểm được xác nhận. Không sử dụng số từ phiếu hồ sơ lỗi của coach trong báo cáo.
+Điều còn chưa chắc: loại xe cụ thể và kích thước của mẫu Cyclist; chiều rộng Bus; cảnh báo kích thước Car còn lại; bản chất cụm điểm rời trong ảnh điểm lạ. Độ cao mặt đường chưa được đo trực tiếp, các ví dụ hướng lấy từ Bảng A còn cần đối chiếu camera, và bốn hộp ngoài 50 m không thuộc phạm vi chấm. Đã có kết quả đối chiếu hai số trong bài bạn bằng công cụ, nhưng chưa có phản hồi bạn ấy kiểm bài tôi hoặc xác nhận đổi kiểm trực tiếp trên màn hình. Không sử dụng số từ phiếu hồ sơ lỗi của coach trong báo cáo.
